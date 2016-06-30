@@ -1,6 +1,9 @@
 /* eslint-env jasmine */
 
 describe('NamedStorage', function () {
+  var localStorage = window.localStorage
+  var sessionStorage = window.sessionStorage
+  var Event = window.Event
 
   function uuid () {
     return Math.random() + Date.now()
