@@ -42,10 +42,10 @@ module.exports = function (config) {
       version: '11'
     },
     'SL_iOS': {
-      base: "SauceLabs",
-      browserName: "iphone",
-      platform: "OS X 10.10",
-      version: "8.1"
+      base: 'SauceLabs',
+      browserName: 'iphone',
+      platform: 'OS X 10.10',
+      version: '8.1'
     }
   }
 
