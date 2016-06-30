@@ -63,7 +63,12 @@ module.exports = function (config) {
 
   if (process.env.TRAVIS) {
     options.reporters.concat(['coveralls', 'dots', 'saucelabs'])
+    // https://github.com/karma-runner/karma-sauce-launcher/issues/73
     options.sauceLabs = {
+      startConnect: false,
+      tunnelIdentifier: process.env.TRAVIS_JOB_NUMBER,
+      username: process.env.SAUCE_USERNAME,
+      accessKey: process.env.SAUCE_ACCESS_KEY,
       testName: 'NamedStorage Unit Tests'
     }
     options.customLaunchers = customLaunchers
