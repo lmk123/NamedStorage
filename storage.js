@@ -6,7 +6,7 @@
   } else if (typeof define === 'function' && define.amd) {
     define(function () { return mod })
   } else {
-    global.NiceStorage = mod
+    global.NamedStorage = mod
   }
 }(this, function (global) {
   'use strict'
@@ -181,7 +181,7 @@
       return
     }
 
-    if (that.useCache) {
+    if (this.useCache) {
       this.caches = {}
     }
 
