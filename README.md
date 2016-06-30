@@ -4,6 +4,8 @@
 [![dependencies Status](https://img.shields.io/david/lmk123/NamedStorage.svg?style=flat-square)](https://david-dm.org/lmk123/NamedStorage)
 [![devDependencies Status](https://img.shields.io/david/dev/lmk123/NamedStorage.svg?style=flat-square)](https://david-dm.org/lmk123/NamedStorage#info=devDependencies)
 
+[![Sauce Test Status](https://saucelabs.com/browser-matrix/mingkaili.svg)](https://saucelabs.com/u/mingkaili)
+
 # NamedStorage
 
 更高效的使用 `localStorage` 与 `sessionStorage`。
