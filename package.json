@@ -1,11 +1,14 @@
 {
   "name": "namedstorage",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "更高效的使用 localStorage 与 sessionStorage。",
   "main": "storage.js",
+  "files": [
+    "storage.js"
+  ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/lmk123/LazyStorage.git"
+    "url": "git+https://github.com/lmk123/NamedStorage.git"
   },
   "scripts": {
     "lint": "eslint --ignore-pattern '/coverage/' \"**/*.js\"",
@@ -31,7 +34,7 @@
   "author": "Mingkai Li <milk.lee@qq.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/lmk123/LazyStorage/issues"
+    "url": "https://github.com/lmk123/NamedStorage/issues"
   },
-  "homepage": "https://github.com/lmk123/LazyStorage#readme"
+  "homepage": "https://github.com/lmk123/NamedStorage#readme"
 }
