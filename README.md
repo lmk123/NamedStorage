@@ -177,10 +177,6 @@ ls.get('foo') // 'bar'
 
 推荐统一使用 NamedStorage 操作存储空间。
 
-## TODO
-
-添加单元测试。
-
 ## 许可
 
 MIT

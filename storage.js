@@ -1,8 +1,10 @@
 /* global define:false */
 (function (global, factory) {
   var mod = factory(global)
+  /* istanbul ignore next */
   if (typeof exports === 'object' && typeof module !== 'undefined') {
     module.exports = mod
+    /* istanbul ignore next */
   } else if (typeof define === 'function' && define.amd) {
     define(function () { return mod })
   } else {
@@ -103,13 +105,12 @@
       this.remove(key)
       return
     }
-    var _key = this.getKey(key)
 
     if (this.useCache) {
-      this.caches[_key] = cloneJSON(value)
+      this.caches[key] = cloneJSON(value)
     }
     if (!this.saveOnUnload) {
-      this.storage.setItem(_key, jsonStringify(value))
+      this.storage.setItem(this.getKey(key), jsonStringify(value))
     }
   }
 
@@ -186,7 +187,7 @@
     }
 
     var namespace = this.namespace
-    var storage = this.stroage
+    var storage = this.storage
     forIn(storage, function (key) {
       if (key.indexOf(namespace) === 0) {
         storage.removeItem(key)

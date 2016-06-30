@@ -1,4 +1,7 @@
 {
+  "globals": {
+    "NamedStorage": false
+  },
   "extends": [
     "standard"
   ]
