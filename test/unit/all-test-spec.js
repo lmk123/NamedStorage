@@ -6,7 +6,7 @@ describe('NamedStorage', function () {
   var Event = window.Event
 
   function uuid () {
-    return Math.random() + Date.now()
+    return String(Math.random() + Date.now())
   }
 
   afterEach(function () {
@@ -15,28 +15,28 @@ describe('NamedStorage', function () {
   })
 
   it('会提供默认配置', function () {
-    var l = new NamedStorage('local')
+    var l = new NamedStorage()
     expect(l.namespace).toBe('d:')
     expect(l.useCache).toBe(true)
     expect(l.saveOnUnload).toBeFalsy()
   })
 
   it('相同的存储空间与命名空间会得到同一个实例', function () {
-    var ls1 = new NamedStorage('local', { name: 'x', cache: false })
-    var ls2 = new NamedStorage('local', { name: 'x', cache: true })
-    var ss1 = new NamedStorage('local', { name: 'y' })
+    var ls1 = new NamedStorage({ name: 'x', cache: false })
+    var ls2 = new NamedStorage({ name: 'x', cache: true })
+    var ss1 = new NamedStorage('y')
     expect(ls2).toBe(ls1)
     expect(ss1).not.toBe(ls1)
     expect(ls2.useCache).toBe(false)
   })
 
   it('lazySave 功能需要启用缓存', function () {
-    var l = new NamedStorage('local', { name: 'z', cache: false, lazySave: true })
+    var l = new NamedStorage({ name: 'z', cache: false, lazySave: true })
     expect(l.saveOnUnload).toBeFalsy()
   })
 
   it('设置值时会保留数据类型', function () {
-    var l = new NamedStorage('session', { name: uuid() })
+    var l = new NamedStorage({ name: uuid(), session: true })
     l.set('number', 1)
     l.set('boolean', true)
     l.set('string', 'hi')
@@ -76,7 +76,7 @@ describe('NamedStorage', function () {
   })
 
   it('设置与读取的对象不是同一个', function () {
-    var l = new NamedStorage('local', { name: uuid() })
+    var l = new NamedStorage(uuid())
     var obj = {}
     l.set('obj', obj)
     var obj2 = l.get('obj')
@@ -91,7 +91,7 @@ describe('NamedStorage', function () {
   })
 
   it('设置的值为 null 或 undefined 时会删除数据', function () {
-    var l = new NamedStorage('local', { name: uuid() })
+    var l = new NamedStorage(uuid())
     l.set('x', 1)
     expect(localStorage.getItem(l.namespace + 'x')).toBe('1')
     l.set('x', null)
@@ -106,14 +106,14 @@ describe('NamedStorage', function () {
   })
 
   it('若启用缓存则读取值后会缓存这个值', function () {
-    var l = new NamedStorage('local', { name: uuid() })
+    var l = new NamedStorage(uuid())
     localStorage.setItem(l.namespace + 'x', 'not json')
     expect(l.get('x')).toBe('not json')
     expect(l.caches.x).toBe('not json')
   })
 
   it('启用缓存时不会意识到 WebStorage 发生了变化', function () {
-    var l = new NamedStorage('local', { name: uuid() })
+    var l = new NamedStorage(uuid())
     l.set('x', 1)
     expect(localStorage.getItem(l.namespace + 'x')).toBe('1')
 
@@ -122,7 +122,7 @@ describe('NamedStorage', function () {
   })
 
   it('关闭缓存后, 每次都会从 WebStorage 内读取数据', function () {
-    var l = new NamedStorage('local', { name: uuid(), cache: false })
+    var l = new NamedStorage({ name: uuid(), cache: false })
     l.set('x', 1)
     expect(localStorage.getItem(l.namespace + 'x')).toBe('1')
 
@@ -131,7 +131,7 @@ describe('NamedStorage', function () {
   })
 
   it('启用 lazySave 后, 只会在 window.onunload 事件时才会将数据写入存储空间', function () {
-    var l = new NamedStorage('local', { name: uuid(), lazySave: true })
+    var l = new NamedStorage({ name: uuid(), lazySave: true })
     l.set('x', 1)
     expect(localStorage.getItem(l.namespace + 'x')).toBeNull()
 
@@ -151,8 +151,9 @@ describe('NamedStorage', function () {
   })
 
   it('清空时默认只会清空当前命名空间下的数据', function () {
-    var ls = new NamedStorage('local', { name: uuid() })
-    var ls2 = new NamedStorage('local', { name: uuid() })
+    var ls = new NamedStorage(uuid())
+    var ls2 = new NamedStorage(uuid())
+
     ls.set('key', 'value')
     localStorage.setItem(ls.namespace + 'key2', 'value2')
     ls2.set('key3', 'value3')
@@ -165,8 +166,8 @@ describe('NamedStorage', function () {
   })
 
   it('清空时传入 true 会清空当前存储空间的所有数据', function () {
-    var ls = new NamedStorage('local', { name: uuid() })
-    var ls2 = new NamedStorage('local', { name: uuid() })
+    var ls = new NamedStorage(uuid())
+    var ls2 = new NamedStorage(uuid())
     ls.set('key', 'value')
     localStorage.setItem('abc', 'value2')
     ls2.set('key3', 'value3')

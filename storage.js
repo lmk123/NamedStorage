@@ -20,6 +20,9 @@
   var isFunction = function (v) {
     return typeof v === 'function'
   }
+  var isString = function (v) {
+    return typeof v === 'string'
+  }
   var emptyObj = {}
   var hasOwn = emptyObj.hasOwnProperty
   var forIn = function (obj, handler) {
@@ -46,16 +49,17 @@
 
   /**
    * 构造函数
-   * @param {String} type - "local" 或 "session"。数据应该在哪个 storage 内读取和设置
-   * @param [options]
+   * @param {String|Object} [options] - 当这个参数是字符串时, 则等同于设置 name
+   * @param {Boolean} [options.session] - 默认使用 localStorage。设置此项为 true 则使用 sessionStorage
    * @param {String} [options.name="d"] - key 的前缀。添加此前缀能避免污染全局 storage 数据
    * @param {Boolean} [options.cache=true] - 若启用缓存, 则读取数据时会先从缓存内读取,然后从 storage 内读取
    * @param {Boolean} [options.lazySave=false] - 若启用, 则设置数据时不会立刻写入 storage, 而是在 window.onunload 事件时写入
    * @constructor
    */
-  function MyStorage (type, options) {
-    var _options = options || emptyObj
+  function MyStorage (options) {
+    var _options = isString(options) ? { name: options } : (options || emptyObj)
     var namespace = (_options.name || 'd') + ':'
+    var type = _options.session ? 'session' : 'local'
 
     var thisType = allStorages[type]
     // 相同的 type 与 namespace 会获取到同一个实例

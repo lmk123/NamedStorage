@@ -17,7 +17,7 @@
 读取与存储的都是 JSON 数据, 这意味着你能保留数据类型:
 
 ```js
-const ls = new NamedStorage('local')
+const ls = new NamedStorage()
 ls.set('key', 1)
 typeof ls.get('key') // "number"
 ```
@@ -27,8 +27,8 @@ typeof ls.get('key') // "number"
 初始化 NamedStorage 实例时, 你可以提供一个命名空间(**NamedStorage 默认提供了一个命名空间——`"d"`, 即 default 的首字母**), 则对此实例的所有增删改查操作都会以这个命名空间作为前缀, 这能有效的避免冲突:
 
 ```js
-const foo = new NamedStorage('local', { name: 'foo' })
-const bar = new NamedStorage('local', { name: 'bar' })
+const foo = new NamedStorage('foo')
+const bar = new NamedStorage('bar')
 foo.set('bar', 1)
 bar.set('bar', 2)
 localStorage.getItem('bar') // null
@@ -40,18 +40,18 @@ localStorage.getItem('bar:bar') // "2"
 相同的存储空间与命名空间会得到同一个实例:
 
 ```js
-const ss1 = new NamedStorage('session', { name: 'foo', cache: false })
-const ss2 = new NamedStorage('session', { name: 'foo', cache: true }) // 因为是同一个实例, 所以重新定义 `cache` 与 `lazySave` 配置不会生效
+const ss1 = new NamedStorage({ name: 'foo', session: true, cache: false })
+const ss2 = new NamedStorage({ name: 'foo', session: true, cache: true }) // 因为是同一个实例, 所以重新定义 `cache` 与 `lazySave` 配置不会生效
 ss1 === ss2 // true
 
-const ls = new NamedStorage('local', { name: 'foo' })
+const ls = new NamedStorage('foo')
 ls === ss1 // false
 ```
 
 因为有了命名空间的支持, 所以清空此实例的数据时可以选择只清空此命名空间内的数据, 而不是清空整个 WebStorage。
 
 ```js
-const ls = new NamedStorage('local', { name: 'foo' })
+const ls = new NamedStorage('foo')
 ls.set('bar', 1)
 localStorage.getItem('foo:bar') // '1'
 localStorage.setItem('bar', '2')
@@ -74,7 +74,7 @@ localStorage.getItem('bar') // null
 NamedStorage 提供一个"懒保存"的功能, 如果启用的话, 则每次设置值时不会直接保存到 WebStorage 中, 而是在 `window.onunload` 事件中统一保存:
 
 ```js
-const ls = new NamedStorage('local', { lazySave: true })
+const ls = new NamedStorage({ lazySave: true })
 ls.set('foo', 'bar')
 localStorage.getItem('d:foo') // null
 window.dispatchEvent(new Event('unload'))
@@ -85,24 +85,30 @@ localStorage.getItem('d:foo') // "\"bar\""
 
 ## API
 
-### new NamedStorage(type[, options])
+### new NamedStorage(name)
 
-### type (String)
+### name (String)
 
-"local" 或 "session", 分别对应 `localStorage` 和 `sessionStorage`。
+等同于 `new NamedStorage({ name: name })`。
 
-### options.cache (Boolean)
+### new NamedStorage([options])
 
-默认值为 `true`。设为 `false` 可禁用缓存功能。详情见[缓存数据](#缓存数据)。
+### options.session (Boolean)
+
+默认情况下使用 `localStorage`。设置此项为 `true` 则使用 `sessionStorage`。
 
 ### options.name (String)
 
 此实例的命名空间, 默认为 `"d"`。详情见[命名空间](#命名空间)。
 
 ```js
-const ls = new NamedStorage('local', { name: 'hello' })
+const ls = new NamedStorage({ name: 'hello' })
 ls.namespace // 'hello:' -> 后面多了一个冒号
 ```
+
+### options.cache (Boolean)
+
+默认值为 `true`。设为 `false` 可禁用缓存功能。详情见[缓存数据](#缓存数据)。
 
 ### options.lazySave (Boolean)
 
@@ -130,6 +136,10 @@ ls.namespace // 'hello:' -> 后面多了一个冒号
 
 不要去更改这些属性的值, 你应该把这些属性都视为只读的。
 
+### this.type (String)
+
+`'local'` 或 `'session'`, 取决于你传入的 `options.session` 参数。
+
 ### this.storage
 
 当前实例指向的存储空间, `localStorage` 或 `sessionStorage`。
@@ -140,9 +150,9 @@ ls.namespace // 'hello:' -> 后面多了一个冒号
 
 ### this.caches (Object)
 
-缓存的数据。如果没有启用缓存功能, 则此对象是一个 `undefined`。
+缓存的数据。如果没有启用缓存功能, 则此属性的值是 `undefined`。
 
-### this.name (String)
+### this.namespace (String)
 
 当前实例的命名空间。
 
@@ -157,8 +167,8 @@ ls.namespace // 'hello:' -> 后面多了一个冒号
 如果你不自定义 `name` 的话, 你每次得到的都是同一个实例:
 
 ```js
-const s1 = new NamedStorage('local', { cache: false })
-const s2 = new NamedStorage('local', { cache: true })
+const s1 = new NamedStorage({ cache: false })
+const s2 = new NamedStorage({ cache: true })
 s1 === s2 // true
 s2.namespace === 'd:' // true
 s2.useCache // false
@@ -167,7 +177,7 @@ s2.useCache // false
 ### 如果你启用了缓存, 则直接更改 WebStorage 内的值不会反映到 NamedStorage
 
 ```js
-const ls = new NamedStorage('local')
+const ls = new NamedStorage()
 ls.set('foo', 'bar')
 localStorage.getItem('d:foo') // 'bar
 
