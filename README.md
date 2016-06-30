@@ -4,7 +4,7 @@
 [![dependencies Status](https://img.shields.io/david/lmk123/NamedStorage.svg?style=flat-square)](https://david-dm.org/lmk123/NamedStorage)
 [![devDependencies Status](https://img.shields.io/david/dev/lmk123/NamedStorage.svg?style=flat-square)](https://david-dm.org/lmk123/NamedStorage#info=devDependencies)
 
-[![Sauce Test Status](https://saucelabs.com/browser-matrix/mingkaili.svg?refresh)](https://saucelabs.com/u/mingkaili)
+[![Sauce Test Status](https://saucelabs.com/browser-matrix/mingkaili.svg?r)](https://saucelabs.com/u/mingkaili)
 
 # NamedStorage
 
