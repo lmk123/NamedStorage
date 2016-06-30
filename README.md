@@ -12,6 +12,16 @@
 
 下文统一使用 WebStorage 来表示 `localStorage` 与 `sessionStorage`。
 
+## 下载
+
+使用 NPM 安装:
+
+```
+npm install namedstorage
+```
+
+或者直接下载: https://npmcdn.com/namedstorage/namedstorage.min.js
+
 ## 特点及使用示例
 
 ### JSON 友好

@@ -1,3 +1,8 @@
+/*!
+ * NamedStorage v1.0.1
+ * https://github.com/lmk123/NamedStorage
+ * Released under the MIT License.
+ */
 /* global define:false */
 (function (global, factory) {
   var mod = factory(global)

@@ -53,12 +53,12 @@ module.exports = function (config) {
     basePath: '',
     frameworks: ['jasmine'],
     files: [
-      'storage.js',
+      'namedstorage.js',
       'test/**/*-spec.js'
     ],
     exclude: [],
     preprocessors: {
-      'storage.js': ['coverage']
+      'namedstorage.js': ['coverage']
     },
     reporters: ['progress', 'coverage'],
     coverageReporter: {
