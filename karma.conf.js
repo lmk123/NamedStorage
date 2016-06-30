@@ -86,7 +86,7 @@ module.exports = function (config) {
   }
 
   if (process.env.TRAVIS) {
-    options.reporters.concat(['coveralls', 'dots', 'saucelabs'])
+    options.reporters = options.reporters.concat(['coveralls', 'dots', 'saucelabs'])
     // https://github.com/karma-runner/karma-sauce-launcher/issues/73
     options.sauceLabs = {
       startConnect: false,
