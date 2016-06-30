@@ -73,7 +73,7 @@ NamedStorage 提供一个"懒保存"的功能, 如果启用的话, 则每次设�
 
 ```js
 const ls = new NamedStorage('local', { lazySave: true })
-ls.set('bar', 'bar')
+ls.set('foo', 'bar')
 localStorage.getItem('d:foo') // null
 window.dispatchEvent(new Event('unload'))
 localStorage.getItem('d:foo') // "\"bar\""
@@ -87,15 +87,15 @@ localStorage.getItem('d:foo') // "\"bar\""
 
 ### type (String)
 
-"local" 或 "session", 分别对应 `localStorage` 和 `sessionStorage`
+"local" 或 "session", 分别对应 `localStorage` 和 `sessionStorage`。
 
 ### options.cache (Boolean)
 
-默认值为 `true`。设为 `false` 可禁用缓存功能。详情见[缓存数据](#缓存数据)
+默认值为 `true`。设为 `false` 可禁用缓存功能。详情见[缓存数据](#缓存数据)。
 
 ### options.name (String)
 
-此实例的命名空间, 默认为 `"d"`。
+此实例的命名空间, 默认为 `"d"`。详情见[命名空间](#命名空间)。
 
 ```js
 const ls = new NamedStorage('local', { name: 'hello' })
@@ -104,11 +104,9 @@ ls.namespace // 'hello:' -> 后面多了一个冒号
 
 ### options.lazySave (Boolean)
 
-默认值为 `false`。**启用此功能需要启用缓存**。详情见["懒保存"](#"懒保存")。
+默认值为 `false`。**启用此功能需要启用缓存**。详情见["懒保存"](#懒保存)。
 
 ### 方法
-
-默认值为 `"d"`。详情见[命名空间](#命名空间)。
 
 ### NamedStorage.prototype.set(key[, value])
 
@@ -148,7 +146,7 @@ ls.namespace // 'hello:' -> 后面多了一个冒号
 
 ### this.saveOnUnload (Boolean)
 
-当前实例是否启用了["懒保存"](#"懒保存")功能。
+当前实例是否启用了["懒保存"](#懒保存)功能。
 
 ## 陷阱
 
@@ -164,7 +162,7 @@ s2.namespace === 'd:' // true
 s2.useCache // false
 ```
 
-### 如果你启用了缓存, 则直接更改 localStorage 内的值不会反映到 NamedStorage
+### 如果你启用了缓存, 则直接更改 WebStorage 内的值不会反映到 NamedStorage
 
 ```js
 const ls = new NamedStorage('local')
