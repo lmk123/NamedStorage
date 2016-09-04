@@ -20,7 +20,7 @@
 npm install namedstorage
 ```
 
-或者直接下载: https://npmcdn.com/namedstorage/namedstorage.min.js
+或者直接下载: https://unpkg.com/namedstorage/namedstorage.min.js
 
 ## 特点及使用示例
 
