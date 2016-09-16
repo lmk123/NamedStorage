@@ -22,9 +22,6 @@
   var isNull = function (v) {
     return v === null
   }
-  var isFunction = function (v) {
-    return typeof v === 'function'
-  }
   var isString = function (v) {
     return typeof v === 'string'
   }
@@ -77,7 +74,6 @@
     this.type = type
     this.namespace = namespace
     this.useCache = _options.cache !== false
-    this.saveOnUnload = _options.lazySave && this.useCache && isFunction(global.addEventListener)
     if (this.useCache) {
       this.caches = {}
     }
