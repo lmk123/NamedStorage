@@ -14,7 +14,7 @@
   "scripts": {
     "min": "uglifyjs namedstorage.js -c -m --screw-ie8 --comments /!/ -o namedstorage.min.js",
     "prepublish": "npm run min",
-    "lint": "eslint --ignore-pattern '/coverage/' \"**/*.js\"",
+    "lint": "eslint --ignore-pattern '/coverage/' --ignore-pattern '*.min.js' \"**/*.js\"",
     "test": "karma start"
   },
   "devDependencies": {

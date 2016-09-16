@@ -3,7 +3,6 @@
 describe('NamedStorage', function () {
   var localStorage = window.localStorage
   var sessionStorage = window.sessionStorage
-  var Event = window.Event
 
   function uuid () {
     return String(Math.random() + Date.now())
