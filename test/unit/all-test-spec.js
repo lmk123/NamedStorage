@@ -30,11 +30,6 @@ describe('NamedStorage', function () {
     expect(ls2.useCache).toBe(false)
   })
 
-  it('lazySave 功能需要启用缓存', function () {
-    var l = new NamedStorage({ name: 'z', cache: false, lazySave: true })
-    expect(l.saveOnUnload).toBeFalsy()
-  })
-
   it('设置值时会保留数据类型', function () {
     var l = new NamedStorage({ name: uuid(), session: true })
     l.set('number', 1)
@@ -128,16 +123,6 @@ describe('NamedStorage', function () {
 
     localStorage.setItem(l.namespace + 'x', '2')
     expect(l.get('x')).toBe(2)
-  })
-
-  it('启用 lazySave 后, 只会在 window.onunload 事件时才会将数据写入存储空间', function () {
-    var l = new NamedStorage({ name: uuid(), lazySave: true })
-    l.set('x', 1)
-    expect(localStorage.getItem(l.namespace + 'x')).toBeNull()
-    try { // 某些环境下模拟 unload 事件会出错
-      window.dispatchEvent(new Event('unload'))
-      expect(localStorage.getItem(l.namespace + 'x')).toBe('1')
-    } catch (e) {}
   })
 
   it('删除值', function () {

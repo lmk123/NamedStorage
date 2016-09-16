@@ -20,7 +20,7 @@
 npm install namedstorage
 ```
 
-或者直接下载: https://npmcdn.com/namedstorage/namedstorage.min.js
+或者直接下载: https://unpkg.com/namedstorage/namedstorage.min.js
 
 ## 特点及使用示例
 
@@ -81,20 +81,6 @@ localStorage.getItem('bar') // null
 
 相比起每次读取数据时都从 WebStorage 内读取, NamedStorage 能缓存第一次读取的值, 并在后面读取时直接使用缓存值。
 
-### "懒保存"
-
-NamedStorage 提供一个"懒保存"的功能, 如果启用的话, 则每次设置值时不会直接保存到 WebStorage 中, 而是在 `window.onunload` 事件中统一保存:
-
-```js
-const ls = new NamedStorage({ lazySave: true })
-ls.set('foo', 'bar')
-localStorage.getItem('d:foo') // null
-window.dispatchEvent(new Event('unload'))
-localStorage.getItem('d:foo') // "\"bar\""
-```
-
-**注意:** 在某些移动设备上 `unload` 事件不一定会触发, 所以请慎用此功能。
-
 ## API
 
 ### new NamedStorage(name)
@@ -121,10 +107,6 @@ ls.namespace // 'hello:' -> 后面多了一个冒号
 ### options.cache (Boolean)
 
 默认值为 `true`。设为 `false` 可禁用缓存功能。详情见[缓存数据](#缓存数据)。
-
-### options.lazySave (Boolean)
-
-默认值为 `false`。**启用此功能需要启用缓存**。详情见["懒保存"](#懒保存)。
 
 ### 方法
 
@@ -167,10 +149,6 @@ ls.namespace // 'hello:' -> 后面多了一个冒号
 ### this.namespace (String)
 
 当前实例的命名空间。
-
-### this.saveOnUnload (Boolean)
-
-当前实例是否启用了["懒保存"](#懒保存)功能。
 
 ## 陷阱
 

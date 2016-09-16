@@ -1,7 +1,7 @@
 {
   "name": "namedstorage",
-  "version": "1.0.1",
-  "description": "更高效的使用 localStorage 与 sessionStorage。",
+  "version": "1.1.0",
+  "description": "添加了命名空间与缓存功能的 localStorage 与 sessionStorage。",
   "main": "namedstorage.js",
   "files": [
     "namedstorage.js",
@@ -13,6 +13,7 @@
   },
   "scripts": {
     "min": "uglifyjs namedstorage.js -c -m --screw-ie8 --comments /!/ -o namedstorage.min.js",
+    "prepublish": "npm run min",
     "lint": "eslint --ignore-pattern '/coverage/' \"**/*.js\"",
     "test": "karma start"
   },

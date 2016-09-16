@@ -1,5 +1,5 @@
 /*!
- * NamedStorage v1.0.1
+ * NamedStorage v1.1.0
  * https://github.com/lmk123/NamedStorage
  * Released under the MIT License.
  */
@@ -81,15 +81,6 @@
     if (this.useCache) {
       this.caches = {}
     }
-    if (this.saveOnUnload) {
-      var that = this
-      global.addEventListener('unload', function () {
-        var caches = that.caches
-        forIn(caches, function (key) {
-          that.storage.setItem(that.getKey(key), jsonStringify(caches[key]))
-        })
-      })
-    }
   }
 
   var storageProp = MyStorage.prototype
@@ -118,9 +109,7 @@
     if (this.useCache) {
       this.caches[key] = cloneJSON(value)
     }
-    if (!this.saveOnUnload) {
-      this.storage.setItem(this.getKey(key), jsonStringify(value))
-    }
+    this.storage.setItem(this.getKey(key), jsonStringify(value))
   }
 
   /**
@@ -168,9 +157,7 @@
     if (this.useCache) {
       delete this.caches[key]
     }
-    if (!this.saveOnUnload) {
-      this.storage.removeItem(this.getKey(key))
-    }
+    this.storage.removeItem(this.getKey(key))
   }
 
   /**
